@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+	xmlns:apdv="http://xmlns.jcp.org/jsf/composite/appdev"
+	xmlns:hg="http://xmlns.jcp.org/jsf/composite/hg"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:p="http://primefaces.org/ui" lang="#{g11n.locale}">
+
+<f:view contentType="text/html" encoding="UTF-8">
+
+	<ui:insert name="metadata" />
+
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title><ui:insert name="title" /> - <h:outputText
+				value="DS Authorization Demo" /></title>
+	</h:head>
+
+	<h:body>
+		<h:messages globalOnly="true" errorStyle="color: red;" />
+		<fieldset>
+			<legend>
+				<h:outputText value="Session" />
+			</legend>
+			<p>
+				<h:outputText value="Current user: #{userSession.user.username}" />
+			</p>
+			<p>
+				<h:outputText value="Change user:" />
+				<h:form>
+					<ui:repeat var="_user" value="#{userSession.users}">
+						<h:commandLink value="#{_user.username}"
+							style="margin-left: 10px;"
+							action="#{userSession.changeUser(_user)}">
+						</h:commandLink>
+						(<h:outputText value="Permissions: " />
+						<ui:repeat var="_perm" value="#{_user.permissions}">
+							<h:outputText value="#{_perm}" />
+						</ui:repeat>)
+						<br />
+					</ui:repeat>
+				</h:form>
+			</p>
+		</fieldset>
+		<ui:insert name="content">
+			<h:outputText value="Content" />
+		</ui:insert>
+	</h:body>
+
+</f:view>
+
+</html>
