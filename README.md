@@ -13,6 +13,8 @@ Seam, for example, evaluates page parameters first, then restrict expressions (a
 
 The application implements a Deltaspike exception handler, which handles the authorization violations.
 
+The project should be easily imported into Eclipse.
+
 System requirements
 -------------------
 - JDK 8
