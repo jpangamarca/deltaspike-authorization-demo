@@ -1,6 +1,5 @@
 dsauthorizdemo
 ==============
-Author: jpangamarca
 
 Deltaspike allows for securing views with access decision voters by annotating the view config classes in a typesafe view-config. The problem is, ADVs are evaluated before page parameters are set, and authorization could depend on page parameters, (example: a page that serves to create and edit entities, depending on a entity-id passed to it, or, a particular property of the entity with the passed id).
 
