@@ -1,49 +1,23 @@
-dsauthorizdemo: Assortment of technologies including Arquillian
-========================
-Author: Pete Muir
-Level: Intermediate
-Technologies: CDI, JSF, JPA, EJB, JPA, JAX-RS, BV
-Summary: An example that incorporates multiple technologies
-Target Project: WildFly
-Source: <https://github.com/wildfly/quickstart/>
+dsauthorizdemo
+==============
+Author: jpangamarca
 
-What is it?
------------
+Deltaspike allows for securing views with access decision voters by annotating the view config classes in a typesafe view-config. The problem is, ACVs are evaluated before page parameters are set, and authorization could depend on page parameters, (example: a page that serves to create and edit entities, depending on a entity-id passed to it, or, a particular property of the entity with the passed id).
 
-This is your project! It is a sample, deployable Maven 3 project to help you get your foot in the door developing with Java EE 7 on JBoss WildFly.
+The application works like this (it is very simplistic, for the sake of demo):
 
-This project is setup to allow you to create a compliant Java EE 7 application using JSF 2.2, CDI 1.1, EJB 3.3, JPA 2.1 and Bean Validation 1.1. It includes a persistence unit and some sample persistence and transaction code to introduce you to database access in enterprise Java.
-
-There is a tutorial for this quickstart in the [Getting Started Developing Applications Guide](https://github.com/wildfly/quickstart/guide/dsauthorizdemo/).
+- There are two users, 'john' and 'peter'. john is authorized to create and edit employees, and peter is authorized for edits only (permission codes are employee.create and employee.edit, and are stored in a set in User.java). A reference to the currently logged-in user is stored in the UserSession session-scoped bean.
+- The application has a employee.xhtml page. If an employee id is not provided, the page will be used to create a employee. If an id is passed, it will be used to edit an employee.
+- The ACV checks for the id passed to the page to find out what permission the user needs to access the page. But it is evaluated before the id is set (via a page parameter), resulting on 'peter' being unable to edit employees (the id is not set = 'employee.create' is required) and 'john' being authorized with the wrong permission (he has the 'employee.create' permission, but should be authorized with 'employee.create').
 
 System requirements
 -------------------
+JDK 8
+Java EE 7 capable application server (Wildfly 8.2.0+ preferred)
+Maven 3.1 or better
 
-All you need to build this project is Java 7.0 (Java SDK 1.7) or better, Maven 3.1 or better.
-
-The application this project produces is designed to be run on JBoss WildFly.
-
- 
-Configure Maven
----------------
-
-If you have not yet done so, you must [Configure Maven](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/CONFIGURE_MAVEN.md) before testing the quickstarts.
-
-
-Start JBoss WildFly with the Web Profile
--------------------------
-
-1. Open a command line and navigate to the root of the JBoss server directory.
-2. The following shows the command line to start the server with the web profile:
-
-        For Linux:   JBOSS_HOME/bin/standalone.sh
-        For Windows: JBOSS_HOME\bin\standalone.bat
-
- 
-Build and Deploy the Quickstart
--------------------------
-
-_NOTE: The following build command assumes you have configured your Maven user settings. If you have not, you must include Maven setting arguments on the command line. See [Build and Deploy the Quickstarts](https://github.com/jboss-developer/jboss-eap-quickstarts#build-and-deploy-the-quickstarts) for complete instructions and additional options._
+Build and Deploy on Wildfly
+---------------------------
 
 1. Make sure you have started the JBoss Server as described above.
 2. Open a command line and navigate to the root directory of this quickstart.
@@ -53,11 +27,10 @@ _NOTE: The following build command assumes you have configured your Maven user s
 
 4. This will deploy `target/dsauthorizdemo.war` to the running instance of the server.
  
-
 Access the application 
 ---------------------
 
-The application will be running at the following URL: <http://localhost:8080/dsauthorizdemo/>.
+The application will be running at the following URL: http://localhost:8080/dsauthorizdemo/
 
 
 Undeploy the Archive
@@ -68,26 +41,6 @@ Undeploy the Archive
 3. When you are finished testing, type this command to undeploy the archive:
 
         mvn wildfly:undeploy
-
-
-Run the Arquillian Tests 
--------------------------
-
-This quickstart provides Arquillian tests. By default, these tests are configured to be skipped as Arquillian tests require the use of a container. 
-
-_NOTE: The following commands assume you have configured your Maven user settings. If you have not, you must include Maven setting arguments on the command line. See [Run the Arquillian Tests](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/RUN_ARQUILLIAN_TESTS.md) for complete instructions and additional options._
-
-1. Make sure you have started the JBoss Server as described above.
-2. Open a command line and navigate to the root directory of this quickstart.
-3. Type the following command to run the test goal with the following profile activated:
-
-        mvn clean test -Parq-wildfly-remote
-
-
-Run the Quickstart in JBoss Developer Studio or Eclipse
--------------------------------------
-You can also start the server and deploy the quickstarts from Eclipse using JBoss tools. For more information, see [Use JBoss Developer Studio or Eclipse to Run the Quickstarts](https://github.com/jboss-developer/jboss-developer-shared-resources/blob/master/guides/USE_JBDS.md) 
-
 
 Debug the Application
 ------------------------------------
