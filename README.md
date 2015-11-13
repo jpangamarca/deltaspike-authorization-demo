@@ -11,6 +11,8 @@ The application works like this (it is very simplistic, for the sake of demo):
 
 Seam, for example, evaluates page parameters first, then restrict expressions (analogous to ADVs) and then page actions. My Seam application (which I'm porting to CDI) works without any problems with these authorization requirements.
 
+The application implements a Deltaspike exception handler, which handles the authorization violations.
+
 System requirements
 -------------------
 - JDK 8
