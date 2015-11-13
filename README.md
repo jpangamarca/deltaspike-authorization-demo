@@ -10,6 +10,8 @@ The application works like this (it is very simplistic, for the sake of demo):
 - The application has a employee.xhtml page. If an employee id is not provided, the page will be used to create a employee. If an id is passed, it will be used to edit an employee.
 - The ADV checks for the id passed to the page to find out what permission the user needs to access the page. But it is evaluated before the id is set (via a page parameter), resulting on 'peter' being unable to edit employees (the id is not set = 'employee.create' is required) and 'john' being authorized with the wrong permission (he has the 'employee.create' permission, but should be authorized with 'employee.create').
 
+Seam, for example, evaluates page parameters first, then restrict expressions (analogous to ADVs) and then page actions. My Seam application (which I'm porting to CDI) works without any problems with these authorization requirements.
+
 System requirements
 -------------------
 - JDK 8
