@@ -2,13 +2,13 @@ dsauthorizdemo
 ==============
 Author: jpangamarca
 
-Deltaspike allows for securing views with access decision voters by annotating the view config classes in a typesafe view-config. The problem is, ACVs are evaluated before page parameters are set, and authorization could depend on page parameters, (example: a page that serves to create and edit entities, depending on a entity-id passed to it, or, a particular property of the entity with the passed id).
+Deltaspike allows for securing views with access decision voters by annotating the view config classes in a typesafe view-config. The problem is, ADVs are evaluated before page parameters are set, and authorization could depend on page parameters, (example: a page that serves to create and edit entities, depending on a entity-id passed to it, or, a particular property of the entity with the passed id).
 
 The application works like this (it is very simplistic, for the sake of demo):
 
 - There are two users, 'john' and 'peter'. john is authorized to create and edit employees, and peter is authorized for edits only (permission codes are employee.create and employee.edit, and are stored in a set in User.java). A reference to the currently logged-in user is stored in the UserSession session-scoped bean.
 - The application has a employee.xhtml page. If an employee id is not provided, the page will be used to create a employee. If an id is passed, it will be used to edit an employee.
-- The ACV checks for the id passed to the page to find out what permission the user needs to access the page. But it is evaluated before the id is set (via a page parameter), resulting on 'peter' being unable to edit employees (the id is not set = 'employee.create' is required) and 'john' being authorized with the wrong permission (he has the 'employee.create' permission, but should be authorized with 'employee.create').
+- The ADV checks for the id passed to the page to find out what permission the user needs to access the page. But it is evaluated before the id is set (via a page parameter), resulting on 'peter' being unable to edit employees (the id is not set = 'employee.create' is required) and 'john' being authorized with the wrong permission (he has the 'employee.create' permission, but should be authorized with 'employee.create').
 
 System requirements
 -------------------
